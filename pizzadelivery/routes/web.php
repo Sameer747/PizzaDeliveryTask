@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(["prefix" => "/pizza", 'as' => 'pizza.'], function () {
-    Route::resource('dashboard', PizzaController::class);
+Route::get('/', function () {
+    return view('dashboard.index');
+})->name('dashboard');
+Route::group(['as' => 'pizza.'], function () {
+    Route::resource('pizza-delivery', PizzaController::class);
 });
 
 

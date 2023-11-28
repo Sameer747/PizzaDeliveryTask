@@ -4,7 +4,7 @@
 <div class="main-sidebar sidebar-style-2">
     <a side id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="">{{ __('Stisla') }}</a>
+            <a href="{{ route('dashboard') }}">{{ __('Stisla') }}</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="index.html">{{ __('St') }}</a>
@@ -13,14 +13,14 @@
             {{-- Dashboard --}}
             <li class="menu-header">{{ __('Dashboard') }}</li>
             <li class="dropdown active">
-                <a href="" class="nav-link "><i
+                <a href="{{ route('dashboard') }}" class="nav-link "><i
                         class="fas fa-fire"></i><span>{{ __('Dashboard') }}</span></a>
             </li>
             {{-- Starter --}}
             <li class="menu-header">{{ __('Starter') }}</li>
             {{-- Categories --}}
-            <li><a class="nav-link" href=""><i class="far fa-square"></i>
-                    <span>{{ __('Categories') }}</span></a></li>
+            <li><a class="nav-link" href="{{ route('pizza.pizza-delivery.index') }}"><i class="far fa-square"></i>
+                    <span>{{ __('Pizza Categories') }}</span></a></li>
             {{-- News --}}
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i>
