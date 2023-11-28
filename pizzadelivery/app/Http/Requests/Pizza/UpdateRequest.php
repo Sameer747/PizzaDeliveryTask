@@ -23,16 +23,17 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $pizzaId = $this->route('pizza-delivery');
+        $pizzaId = request()->segment(2);
         return [
             'name' => ['required', 'max:255', 'unique:pizzas,name,' . $pizzaId],
             'category' => ['required', 'max:255', 'unique:pizzas,category,' . $pizzaId],
         ];
     }
-    public function pizzaUpdate(Request $request,string $id){
+    public function pizzaUpdate(Request $request, string $id)
+    {
         $pizza = Pizza::findOrFail($id);
         $pizza->name = $request->name;
-        $pizza->category =$request->category;
+        $pizza->category = $request->category;
         $pizza->save();
     }
 }
