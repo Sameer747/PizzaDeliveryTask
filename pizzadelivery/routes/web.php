@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// dashboard
 Route::get('/', function () {
     return view('dashboard.index');
 })->name('dashboard');
+// pizza resource route
 Route::group(['as' => 'pizza.'], function () {
     Route::resource('pizza-delivery', PizzaController::class);
+});
+
+Route::group(['as' => 'order.'], function () {
+
 });
 
 

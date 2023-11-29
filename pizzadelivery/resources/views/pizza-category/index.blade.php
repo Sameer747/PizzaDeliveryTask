@@ -23,6 +23,7 @@
                                 </th>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Category') }}</th>
+                                <th>{{ __('Price') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -34,6 +35,7 @@
                                     </td>
                                     <td>{{ $pizza->name }}</td>
                                     <td>{{ $pizza->category }}</td>
+                                    <td>{{ $pizza->price . '$' }}</td>
                                     <td>
                                         <a href="{{ route('pizza.pizza-delivery.edit', $pizza->id) }}"
                                             class="btn btn-primary"><i class="fas fa-edit"></i></a>
