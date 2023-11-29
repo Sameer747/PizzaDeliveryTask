@@ -51,7 +51,7 @@ class PizzaController extends Controller
     public function edit(string $id)
     {
         $pizzas = Pizza::findOrFail($id);
-        return view('category.edit', compact('pizzas'));
+        return view('pizza-category.edit', compact('pizzas'));
     }
 
     /**
@@ -59,6 +59,7 @@ class PizzaController extends Controller
      */
     public function update(UpdateRequest $request, string $id)
     {
+        // dd($request->all());exit;
         $request->pizzaUpdate($request, $id);
         toast(__('Updated Successfully!'), 'success', 'top')->position('top-end')->width('400');
         return redirect()->route('pizza.pizza-delivery.index');

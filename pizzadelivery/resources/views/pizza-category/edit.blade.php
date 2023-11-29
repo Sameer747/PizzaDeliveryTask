@@ -24,8 +24,16 @@
                     {{-- Category --}}
                     <div class="form-group">
                         <label for="">{{ __('Category') }}</label>
-                        <input name="category" value="{{ $pizzas->category }}" type="text" class="form-control"
-                            id="category">
+                        {{-- <input name="category" type="text" class="form-control" id="category"> --}}
+                        <select name="category" class="form-control" id="category">
+                            @if ($pizzas->category === 'Thin Crust')
+                                <option selected value="1">Thin Crust</option>
+                                <option value="0">Stuffed Crust</option>
+                            @else
+                                <option value="1">Thin Crust</option>
+                                <option selected value="0">Stuffed Crust</option>
+                            @endif
+                        </select>
                         @error('category')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -61,7 +69,7 @@
                         @enderror
                     </div> --}}
                     {{-- submit btn --}}
-                    <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                 </form>
             </div>
         </div>

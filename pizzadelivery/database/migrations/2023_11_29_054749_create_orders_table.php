@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('pizza');
             $table->string('category');
+            $table->double('qty');
             $table->double('price');
             $table->boolean('status');
             $table->timestamps();

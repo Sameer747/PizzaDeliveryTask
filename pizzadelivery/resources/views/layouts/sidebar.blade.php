@@ -18,9 +18,12 @@
             </li>
             {{-- Starter --}}
             <li class="menu-header">{{ __('Starter') }}</li>
-            {{-- Categories --}}
+            {{-- Pizza Categories --}}
             <li><a class="nav-link" href="{{ route('pizza.pizza-delivery.index') }}"><i class="far fa-square"></i>
                     <span>{{ __('Pizza Categories') }}</span></a></li>
+            {{-- Orders --}}
+            <li><a class="nav-link" href="{{ route('order.order-delivery.index') }}"><i class="far fa-square"></i>
+                    <span>{{ __('Orders') }}</span></a></li>
             {{-- News --}}
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i>

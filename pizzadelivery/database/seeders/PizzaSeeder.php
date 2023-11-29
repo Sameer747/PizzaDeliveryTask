@@ -20,37 +20,38 @@ class PizzaSeeder extends Seeder
         $pizzas = [
             [
                 'name' => 'Chicago Style Pizza',
-                'category' => 'chicago',
+
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
             [
                 'name' => 'Brick Oven Pizza',
-                'category' => 'brick',
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
             [
                 'name' => 'Italian Pizza',
-                'category' => 'italain',
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
             [
                 'name' => 'Neapolitan Pizza',
-                'category' => 'neapolitan',
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
             [
                 'name' => 'California Pizza',
-                'category' => 'california',
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
             [
                 'name' => 'New York Style Pizza',
-                'category' => 'newyork',
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
             [
                 'name' => 'Sicilian Pizza',
-                'category' => 'sicilian',
+                'category' => 'Thin Crust',
                 'price' => '10'
             ],
         ];

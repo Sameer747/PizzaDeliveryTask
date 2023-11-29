@@ -33,7 +33,9 @@
                                     <td>
                                         {{ $pizza->id }}
                                     </td>
-                                    <td>{{ $pizza->name }}</td>
+                                    <td>
+                                        <a href="{{route('pizza.pizza-delivery.edit',$pizza->id)}}">{{ $pizza->name }}</a>
+                                    </td>
                                     <td>{{ $pizza->category }}</td>
                                     <td>{{ $pizza->price . '$' }}</td>
                                     <td>

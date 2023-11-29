@@ -10,7 +10,7 @@
 
             </div>
             <div class="card-body">
-                <form method="POST" action="{{route('pizza.pizza-delivery.store')}}">
+                <form method="POST" action="{{ route('pizza.pizza-delivery.store') }}">
                     @csrf
                     {{-- Name --}}
                     <div class="form-group">
@@ -23,7 +23,11 @@
                     {{-- Category --}}
                     <div class="form-group">
                         <label for="">{{ __('Category') }}</label>
-                        <input name="category" type="text" class="form-control" id="category">
+                        {{-- <input name="category" type="text" class="form-control" id="category"> --}}
+                        <select name="category" class="form-control" id="category">
+                            <option value="1">Thin Crust</option>
+                            <option value="0">Stuffed Crust</option>
+                        </select>
                         @error('category')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

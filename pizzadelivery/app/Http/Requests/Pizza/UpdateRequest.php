@@ -33,7 +33,12 @@ class UpdateRequest extends FormRequest
     {
         $pizza = Pizza::findOrFail($id);
         $pizza->name = $request->name;
-        $pizza->category = $request->category;
+        if ($request->category == 0) {
+            $pizza->category = 'Stuffed Crust';
+        } else {
+            $pizza->category = 'Thin Crust';
+        }
+        $pizza->price = 10;
         $pizza->save();
     }
 }
