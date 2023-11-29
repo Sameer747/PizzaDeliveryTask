@@ -44,7 +44,7 @@ class UpdateRequest extends FormRequest
             $order->category = 'Stuffed Crust';
         }
         $order->qty = $request->qty;
-        $order->price = $request->price * $request->qty;
+        $order->price = 10 * $request->qty;
         $order->status = $request->status;
         $order->save();
     }
