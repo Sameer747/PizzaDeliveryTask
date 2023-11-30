@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PizzaController;
+use App\Http\Controllers\RiderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,5 +27,8 @@ Route::group(['as' => 'pizza.'], function () {
 Route::group(['as' => 'order.'], function () {
     Route::resource('order-delivery', OrderController::class);
 });
-
+// riders resoource route
+Route::group(['as' => 'rider.'], function () {
+    Route::resource('rider-delivery', RiderController::class);
+});
 

@@ -14,7 +14,7 @@ class RiderSeeder extends Seeder
     public function run(): void
     {
         $rider = new Rider;
-        $rider->rider_name = "cdf";
+        $rider->rider_name = "Rider1";
         $rider->phone = "00001";
         $rider->total_capacity = 4;
         $rider->available_capacity = 4;

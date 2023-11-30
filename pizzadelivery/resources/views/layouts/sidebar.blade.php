@@ -21,6 +21,9 @@
             {{-- Pizza Categories --}}
             <li><a class="nav-link" href="{{ route('pizza.pizza-delivery.index') }}"><i class="far fa-square"></i>
                     <span>{{ __('Pizza Categories') }}</span></a></li>
+            {{-- Riders --}}
+            <li><a class="nav-link" href="{{ route('rider.rider-delivery.index') }}"><i class="far fa-square"></i>
+                    <span>{{ __('Riders') }}</span></a></li>
             {{-- Orders --}}
             <li><a class="nav-link" href="{{ route('order.order-delivery.index') }}"><i class="far fa-square"></i>
                     <span>{{ __('Orders') }}</span></a></li>
