@@ -38,7 +38,8 @@ class UpdateRequest extends FormRequest
         $order->userName = $request->user_name;
         $order->phone = $request->phone;
         $order->pizza = $request->name;
-        if ($request->category === 1) {
+        // dd($request->category);
+        if ($request->category == 1) {
             $order->category = 'Thin Crust';
         } else {
             $order->category = 'Stuffed Crust';

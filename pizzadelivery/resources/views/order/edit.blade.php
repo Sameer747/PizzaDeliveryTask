@@ -49,15 +49,13 @@
                         <label for="">{{ __('Category') }}</label>
                         <select name="category" class="form-control" id="category">
                             <option value="">Select</option>
-                            @if ($orders->category === 'Stuffed Crust')
-                                <option value="1">Thin Crust</option>
-                                <option selected value="0">Stuffed Crust</option>
-                            @endif
                             @if ($orders->category === 'Thin Crust')
                                 <option selected value="1">Thin Crust</option>
                                 <option value="0">Stuffed Crust</option>
+                            @else
+                                <option value="1">Thin Crust</option>
+                                <option selected value="0">Stuffed Crust</option>
                             @endif
-
                         </select>
                         @error('category')
                             <p class="text-danger">{{ $message }}</p>

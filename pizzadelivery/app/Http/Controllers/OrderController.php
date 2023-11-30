@@ -33,6 +33,7 @@ class OrderController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        // dd($request->all());exit;
         $request->createOrder($request);
         toast(__('Created Successfully!'), 'success', 'top')->position('top-end')->width('400');
         return redirect()->route('order.order-delivery.index');

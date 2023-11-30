@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::group(['as' => 'pizza.'], function () {
     Route::resource('pizza-delivery', PizzaController::class);
 });
-
+// order resource route
 Route::group(['as' => 'order.'], function () {
     Route::resource('order-delivery', OrderController::class);
 });

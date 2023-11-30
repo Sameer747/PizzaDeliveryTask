@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
     {
         $pizza = new Pizza;
         $pizza->name = $request->name;
-        if ($request->category === 1) {
+        if ($request->category == 1) {
             $pizza->category = 'Thin Crust';
         } else {
             $pizza->category = 'Stuffed Crust';
