@@ -11,6 +11,9 @@
                     <a href="{{ route('order.order-delivery.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> {{ __('Place Order') }}
                     </a>
+                    <a href="{{ route('order.order-complete') }}" id="deleteAllSelectedRecord" class="btn btn-primary">
+                        <i class="fas "></i> {{ __('Complete Order') }}
+                    </a>
                 </div>
             </div>
             <div class="card-body">
@@ -18,6 +21,9 @@
                     <table class="table table-striped" id="table-1">
                         <thead>
                             <tr>
+                                <th>
+                                    <input type="checkbox" name="" id="select_all_ids">
+                                </th>
                                 <th>
                                     {{ __('#') }}
                                 </th>
@@ -33,7 +39,11 @@
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
-                                <tr>
+                                <tr id="order_ids{{ $order->id }}">
+                                    <td>
+                                        <input type="checkbox" name="ids" class="checkbox_ids" id=""
+                                            value="{{ $order->id }}">
+                                    </td>
                                     <td>
                                         {{ $order->id }}
                                     </td>
@@ -48,6 +58,9 @@
                                     <td>{{ $order->price . '$' }}</td>
                                     @if ($order->status === 0)
                                         <td>Pending</td>
+                                    @endif
+                                    @if ($order->status === 1)
+                                        <td>Completed</td>
                                     @endif
                                     <td>
                                         <a href="{{ route('order.order-delivery.edit', $order->id) }}"
@@ -73,6 +86,40 @@
                 "sortable": false,
                 "targets": [2, 3]
             }]
+        });
+    </script>
+    <script>
+        $(function(e) {
+            $('#select_all_ids').click(function() {
+                $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+            });
+
+            $('#deleteAllSelectedRecord').click(function(e) {
+                e.preventDefault();
+                var all_ids = [];
+                $('input:checkbox[name=ids]:checked').each(function() {
+                    all_ids.push($(this).val());
+                });
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax(
+                    url: "{{ route('order.order-complete') }}",
+                    type: 'GET',
+                    data: {
+                        ids: all_ids,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $.each(all_ids, function(key, val)) {
+                            $('#order_ids' + val);
+                        }
+                    }
+                );
+            });
         });
     </script>
 @endpush

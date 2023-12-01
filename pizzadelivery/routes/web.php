@@ -25,6 +25,7 @@ Route::group(['as' => 'pizza.'], function () {
 });
 // order resource route
 Route::group(['as' => 'order.'], function () {
+    Route::get('complete-order',[OrderController::class,'complete_Order'])->name('order-complete');
     Route::resource('order-delivery', OrderController::class);
 });
 // riders resoource route
