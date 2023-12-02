@@ -4,6 +4,7 @@
         <div class="section-header">
             <h1>{{ __('Orders') }}</h1>
         </div>
+        <div id="success"></div>
         <div class="card card-primary">
             <div class="card-header">
                 <h4>{{ __('All Orders') }}</h4>
@@ -11,7 +12,7 @@
                     <a href="{{ route('order.order-delivery.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> {{ __('Place Order') }}
                     </a>
-                    <a href="{{ route('order.order-complete') }}" id="deleteAllSelectedRecord" class="btn btn-primary">
+                    <a href="{{ route('order.order-complete') }}" id="addAllSelectedRecord" class="btn btn-primary comp">
                         <i class="fas "></i> {{ __('Complete Order') }}
                     </a>
                 </div>
@@ -21,9 +22,9 @@
                     <table class="table table-striped" id="table-1">
                         <thead>
                             <tr>
-                                <th>
+                                {{-- <th>
                                     <input type="checkbox" name="" id="select_all_ids">
-                                </th>
+                                </th> --}}
                                 <th>
                                     {{ __('#') }}
                                 </th>
@@ -39,11 +40,12 @@
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
-                                <tr id="order_ids{{ $order->id }}">
-                                    <td>
+                                {{-- id="order_ids{{ $order->id }}" --}}
+                                <tr>
+                                    {{-- <td>
                                         <input type="checkbox" name="ids" class="checkbox_ids" id=""
                                             value="{{ $order->id }}">
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         {{ $order->id }}
                                     </td>
@@ -84,42 +86,44 @@
         $("#table-1").dataTable({
             "columnDefs": [{
                 "sortable": false,
-                "targets": [2, 3]
+                "targets": [3, 4]
             }]
         });
-    </script>
-    <script>
-        $(function(e) {
-            $('#select_all_ids').click(function() {
-                $('.checkbox_ids').prop('checked', $(this).prop('checked'));
-            });
 
-            $('#deleteAllSelectedRecord').click(function(e) {
-                e.preventDefault();
-                var all_ids = [];
-                $('input:checkbox[name=ids]:checked').each(function() {
-                    all_ids.push($(this).val());
-                });
+        // $(function() {
+        //     $('#select_all_ids').click(function() {
+        //         $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+        //     });
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax(
-                    url: "{{ route('order.order-complete') }}",
-                    type: 'GET',
-                    data: {
-                        ids: all_ids,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        $.each(all_ids, function(key, val)) {
-                            $('#order_ids' + val);
-                        }
-                    }
-                );
-            });
-        });
+        //     $('#addAllSelectedRecord').click(function(e) {
+        //         // e.preventDefault();
+        //         var all_ids = [];
+        //         $('input:checkbox[name=ids]:checked').each(function() {
+        //             all_ids.push($(this).val());
+        //         });
+
+        //         $.ajax({
+        //             url: "{{ route('order.order-complete') }}",
+        //             type: 'GET',
+        //             data: {
+        //                 _token: '{{ csrf_token() }}',
+        //                 ids: all_ids
+        //             },
+        //             success: function(response) {
+        //                 // Handle success response
+        //                 $('#success').html(response);
+        //                 console.log(response);
+        //                 $.each(all_ids, function(key, val) {
+        //                     $('#order_ids' + val).add();
+        //                 });
+        //             },
+        //             error: function(error) {
+        //                 // window.location.reload();
+        //                 $('#success').html(error);
+        //                 console.error(error);
+        //             }
+        //         });
+        //     });
+        // });
     </script>
 @endpush

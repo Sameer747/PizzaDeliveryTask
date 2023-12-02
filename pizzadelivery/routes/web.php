@@ -3,6 +3,8 @@
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\RiderController;
+use App\Models\Order;
+use App\Models\Rider;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 // dashboard
 Route::get('/', function () {
+    $orders = Order::all();
+    $riders = Rider::all();
     return view('dashboard.index');
 })->name('dashboard');
 // pizza resource route
@@ -25,7 +29,7 @@ Route::group(['as' => 'pizza.'], function () {
 });
 // order resource route
 Route::group(['as' => 'order.'], function () {
-    Route::get('complete-order',[OrderController::class,'complete_Order'])->name('order-complete');
+    Route::get('complete-order', [OrderController::class, 'complete_Order'])->name('order-complete');
     Route::resource('order-delivery', OrderController::class);
 });
 // riders resoource route

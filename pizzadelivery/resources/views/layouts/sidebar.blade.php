@@ -4,10 +4,10 @@
 <div class="main-sidebar sidebar-style-2">
     <a side id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">{{ __('Stisla') }}</a>
+            <a href="{{ route('dashboard') }}">{{ __('Pizza Delivery') }}</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">{{ __('St') }}</a>
+            <a href="{{ route('dashboard') }}">{{ __('St') }}</a>
         </div>
         <ul class="sidebar-menu">
             {{-- Dashboard --}}

@@ -14,8 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('rider_name');
             $table->string('phone');
-            $table->integer('total_capacity');
-            $table->integer('available_capacity');
+            $table->double('capacity');
             $table->timestamps();
         });
     }
