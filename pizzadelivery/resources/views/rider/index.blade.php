@@ -23,8 +23,7 @@
                                 </th>
                                 <th>{{ __('Rider Name') }}</th>
                                 <th>{{ __('Phone') }}</th>
-                                <th>{{ __('Total Capacity') }}</th>
-                                <th>{{ __('Available Capacity') }}</th>
+                                <th>{{ __('Capacity') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
@@ -39,8 +38,7 @@
                                             href="{{ route('rider.rider-delivery.edit', $rider->id) }}">{{ $rider->rider_name }}</a>
                                     </td>
                                     <td>{{ $rider->phone }}</td>
-                                    <td>{{ $rider->total_capacity }}</td>
-                                    <td>{{ $rider->available_capacity }}</td>
+                                    <td>{{ $rider->capacity }}</td>
                                     <td>
                                         <a href="{{ route('rider.rider-delivery.edit', $rider->id) }}"
                                             class="btn btn-primary"><i class="fas fa-edit"></i></a>

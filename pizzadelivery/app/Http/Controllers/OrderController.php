@@ -212,74 +212,123 @@ class OrderController extends Controller
     //     }
     // }
 
-    // public function complete_Order(Request $request)
-    // {
-    //     $selected_ids = $request->input('ids');
-    //     dd($selected_ids);exit;
-    //     // echo "<br>" . $selected_ids . "<br>";
-    //     // exit;
-    //     // total riders count
-    //     $totalRiders = Rider::select('id')->where('available_capacity', '>', '0')->get()->count();
-    //     if (!empty($totalRiders)) {
-    //         for ($i = 1; $i <= $totalRiders; $i++) {
-    //             echo "in rider for loop iteration#: " . $i;
-    //             // db call to get first available rider
-    //             $riders = DB::table('riders')->where('available_capacity', '>', '0')->get(['id', 'total_capacity', 'available_capacity'])->first();
-    //             $availableCapacity = $riders->available_capacity;
-    //             foreach ($selected_ids as $selected_id) {
-    //                 echo "in selected_ids for each loop";
-    //                 $pending_orders = Order::findorFail($selected_id)->where('qty', '>', '0');
-    //                 $qty = $pending_orders->qty;
-    //                 if ($availableCapacity >= $qty) {
-    //                     $availableCapacity = $availableCapacity - $qty;
-    //                     //update rider capacity
-    //                     $updateRider = Rider::findOrFail($riders->id);
-    //                     $updateRider->available_capacity = $availableCapacity;
-    //                     $updateRider->save();
-    //                     //update order status
-    //                     $updateOrder = Order::findOrFail($selected_id);
-    //                     $updateOrder->status = 1;
-    //                     $updateOrder->save();
-    //                     //update dashboard
-    //                     $dashboard = Dashboard::all();
-    //                     $dashboard->order_id = $selected_id;
-    //                     $dashboard->rider_id = $riders->id;
-    //                     $dashboard->status = 1;
-    //                     $dashboard->save();
-    //                 } else {
-    //                     $qty = $qty - $availableCapacity;
-    //                     //update order qty
-    //                     $updateOrder = Order::findOrFail($selected_id);
-    //                     $updateOrder->qty = $qty;
-    //                     if ($qty === 0) {
-    //                         $updateOrder->status = 1;
-    //                     }
-    //                     $updateOrder->save();
-    //                     //update dashboard
-    //                     $dashboard = Dashboard::all();
-    //                     $dashboard->order_id = $selected_id;
-    //                     $dashboard->rider_id = $riders->id;
-    //                     if ($qty === 0) {
-    //                         $dashboard->status = 1;
-    //                     } else {
-    //                         $dashboard->status = 0;
-    //                     }
-    //                     $dashboard->save();
-    //                     //update rider capacity
-    //                     $updateRider = Rider::findOrFail($riders->id);
-    //                     $updateRider->available_capacity = 0;
-    //                     $updateRider->save();
-    //                 }
-    //             }
+    public function complete_Order(Request $request)
+    {
+        $orders = Order::select(['id', 'qty', 'status'])->where('status', '===', '0')->where('qty', '>', '0')->get();
+        // dd($orders);exit;
+        $riders = Rider::select(['id', 'capacity'])->where('capacity', '>', '0')->get();
+        $orderArray = array();
+        $riderArray = array();
+        $result = array();
+        $remainingSlots = array();
+        //add to order array
+        //echo "Orders qty: " . "<br>";
+        //print_r($orders);
 
-    //         }
-    //     }
-    //     else {
-    //         toast(__('No Riders Available!'), 'error', 'top')->position('top-end')->width('400');
-    //         return redirect()->back()->route('order.order-complete');
-    //         // return redirect()->back();
-    //     }
-    // }
+
+        foreach ($orders as $order) {
+            $orderArray[$order->id] = $order->qty;
+        }
+        //print_r($orderArray);
+        //add to rider array
+        //echo "Rider capacity: " . "<br>";
+        foreach ($riders as $rider) {
+            $riderArray[$rider->id] = $rider->capacity;
+        }
+        $maxCap = max($riderArray);
+        $tempQty = 0;
+        $totalOrderArray = count($orderArray);
+        $count = 0;
+        foreach ($orderArray as $okey => $ovalue) {
+            $count += 1;
+            $tempQty += $ovalue; //2//4//2//1//3
+            if ($tempQty > $maxCap) {
+                /*assign previous qty to rider*/
+                //prev qty
+                echo "temp qty before" . $tempQty . "<br>";
+                $prevQty = $tempQty - $ovalue; //9
+                echo "temp qty after" . $prevQty . "<br>";
+                //find rider id and assign
+                $rider_id = array_search($maxCap, $riderArray);
+                $findName = Rider::select('rider_name')->where('id', $rider_id)->get();
+                foreach ($findName as $key => $val) {
+                    $result[$rider_id] = [
+                        'rider_name' => $val->rider_name,
+                        'qty_assigned' => $prevQty,
+                    ];
+                }
+                /*Assign remaining slots*/
+                $cap = $maxCap - $prevQty; //10-9
+                if ($cap > 0) {
+                    $rider_id = array_search($maxCap, $riderArray);
+                    $remainingSlots[$rider_id] = $cap;
+                }
+                //set $tempqty =$tempqty-new qty to new qty
+                $tempQty = $ovalue; //3
+                echo "new temp qty " . $tempQty;
+                if ($totalOrderArray == $count && $tempQty > 0) {
+                    foreach ($riderArray as $rkey => $rvalue) {
+                        if ($tempQty == $rvalue) {
+                            $findName = Rider::select('rider_name')->where('id', $rkey)->get();
+                            foreach ($findName as $key => $value) {
+                                $result[$rkey] = [
+                                    'rider_name' => $value->rider_name,
+                                    'qty_assigned' => $tempQty,
+                                ];
+                            }
+                            // $result[$count]=[
+                            //     $result['Rider Id'] = $rkey,
+                            //     $result['Rider Name'] = $findName,
+                            //     $result['Assigned Qty'] = $tempQty
+                            // ];
+                            // $result[$rkey] = $tempQty;
+                            $cap = $rvalue - $tempQty;
+                            if ($cap > 0) {
+                                $remainingSlots[$rkey] = $cap;
+                            }
+                        }
+                    }
+                }
+            } else {
+                //wait for next order qty
+                if ($tempQty == $maxCap) {
+                    //assign the max cap rider
+                    $rider_id = array_search($maxCap, $riderArray);
+                    // $findName = Rider::findOrFail($rider_id)->select('rider_name')->get()->first();
+                    //
+                    // $result['Rider Name'] = $findName;
+                    $result[$rider_id] = $tempQty;
+                    $cap = $maxCap - $tempQty;
+                    if ($cap > 0) {
+                        $rider_id = array_search($maxCap, $riderArray);
+                        $remainingSlots[$rider_id] = $cap;
+                    }
+                }
+            }
+        }
+        echo "<br>";
+        dd($result);
+        echo "<br>";
+        // print_r($remainingSlots);
+
+        //count total orders and riders
+        // $totalOrders = count($orderArray);
+        // $totalRider = count($riderArray);
+        // $res = array();
+        // echo "<br>";
+        // for ($j = 1; $j <= $totalOrders; $j++) {
+        //     for ($i = 1; $i < $totalRider; $i++) {
+        //         if ($j===6) {
+        //             break;
+        //         }
+        //         if ($orderArray[$j] > $riderArray[$j]) {
+        //             echo $riderArray[$i] . "<br>";
+        //         }
+        //     }
+        // }
+
+
+    }
 
     /**
      * Show the form for editing the specified resource.
